@@ -3,7 +3,7 @@
 namespace App\DTO;
 
 
-class GameDTO
+readonly class GameDTO
 {
     public function __construct(
 

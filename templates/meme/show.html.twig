@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Memes{% endblock %}
+
+{% block body %}
+    <h1>Liste des memes</h1>
+    {% for meme in memes %}
+        <p>{{ meme.name }}</p>
+        <figure>
+            <img src="{{ meme.url }}" alt="{{ meme.name }}">
+        </figure>
+        
+    {% endfor %}
+{% endblock %}
