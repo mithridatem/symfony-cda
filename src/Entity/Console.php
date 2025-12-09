@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ConsoleRepository::class)]
 #[ApiResource(
@@ -38,11 +39,25 @@ class Console
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['console:read', 'console:all'])]
+    #[Groups(['console:read', 'console:all', 'game:all', 'game:read'])]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['console:read', 'console:all'])]
+    #[Groups(['console:read', 'console:all', 'game:all', 'game:read'])]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     private ?string $manufacturer = null;
 
     public function getId(): ?int

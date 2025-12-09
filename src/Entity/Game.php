@@ -4,8 +4,34 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\State\GameExistProcessor;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/game/{id}', 
+            requirements: ['id' => '\d+'],
+            normalizationContext: ['groups' =>  'game:all']
+        ),
+        new GetCollection(
+            uriTemplate: '/games',
+            normalizationContext: ['groups' => 'game:read']),
+        new Post(
+            uriTemplate: '/game',
+            status: 301,
+            processor: GameExistProcessor::class
+        )
+    ],
+    order: ['id' => 'ASC', 'title' => 'ASC'],
+    paginationEnabled: true
+)]
 class Game
 {
     #[ORM\Id]
@@ -14,16 +40,20 @@ class Game
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['game:all', 'game:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['game:all', 'game:read'])]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Groups(['game:all', 'game:read'])]
     private ?\DateTimeImmutable $publishAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['game:all', 'game:read'])]
     private ?Console $console = null;
 
     public function getId(): ?int
