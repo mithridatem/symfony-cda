@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<section>
+    {% for dto in game_dto %}
+        <article>
+            <h2>{{ dto.titre }}</h2>
+            <h2>{{ dto.categorie }}</h2>
+            <p>{{ dto.console }}</p>
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

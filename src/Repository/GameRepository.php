@@ -40,4 +40,25 @@ class GameRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+    /**
+     * @return GameDTO[] Returns an array of ScoreDto objects
+     */
+    public function findGameDTO(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(
+                'NEW App\DTO\GameDTO(
+                    g.title,
+                    g.type,
+                    c.name
+                )'
+            )
+            ->innerJoin('g.console', 'c')
+            ->groupBy('g.id')
+            ->orderBy('g.id')
+            ->getQuery()
+            ->getResult();
+    }
 }
