@@ -56,7 +56,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToRoute('Retour à l\'accueil', 'fa fa-home', 'app_home');
-        yield MenuItem::linkToCrud('Console', 'fas fa-list', Console::class);
+        yield MenuItem::linkToCrud('Console', 'fa-solid fa-gamepad', Console::class);
         yield MenuItem::linkToCrud('Game', 'fas fa-list', Game::class);
 
     }
