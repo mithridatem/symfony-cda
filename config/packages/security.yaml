@@ -26,6 +26,7 @@ security:
         api:
             pattern: ^/api
             stateless: true
+            provider: app_user_provider
             jwt: ~  
         main:
             lazy: true
@@ -45,7 +46,7 @@ security:
     # Note: Only the *first* matching rule is applied
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-       # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/console, roles: ROLE_ADMIN }
 
 when@test:
     security:
